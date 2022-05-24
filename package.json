@@ -1,7 +1,7 @@
 {
   "name": "lista-tarefas-rest-api",
   "version": "0.0.1",
-  "description": "",
+  "description": "Estudando Nestjs REST API",
   "author": "Clayton Eduard",
   "private": true,
   "license": "UNLICENSED",
@@ -26,7 +26,8 @@
     "@nestjs/platform-express": "^8.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
