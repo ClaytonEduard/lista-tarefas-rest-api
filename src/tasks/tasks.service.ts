@@ -12,6 +12,12 @@ export class TasksService {
     getAllTasks(): Task[] {
         return this.tasks;
     }
+    //criando o metodo de criacao de id onde ele verifica se o id e igual listado 
+    getTaskById(id: string): Task {
+        return this.tasks.find((task) => task.id === id)
+    }
+
+
 
     // metodo de criar tarefas
     createTask(createTaskDto: CreateTaskDto): Task {

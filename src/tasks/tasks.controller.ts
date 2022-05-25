@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task-dto';
 import { Task } from './tasks.model';
 import { TasksService } from './tasks.service';
@@ -11,6 +11,15 @@ export class TasksController {
     getAllTasks(): Task[] {
         return this.tasksService.getAllTasks();
     }
+    //https://localhost:3000/tasks/id
+    @Get('/:id')
+    getTaskById(@Param('id') id: string): Task {
+        return this.tasksService.getTaskById(id);
+    }
+
+
+
+
     // metodo criar do lado do service
     @Post()
     createTask(@Body() createTaskDto: CreateTaskDto): Task {
