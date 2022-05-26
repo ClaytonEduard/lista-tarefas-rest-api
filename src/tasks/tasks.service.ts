@@ -3,6 +3,7 @@ import { Task, TaskStatus } from './tasks.model';
 import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task-dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class TasksService {
@@ -44,7 +45,7 @@ export class TasksService {
         // if não tiver erro(404)
         if (!found) {
             throw new NotFoundException(`Tarefa com ID "${id}" não encontrado!`);
-            
+
         }
         // else retrna o a tarefa encontrada
         return found;
@@ -68,10 +69,13 @@ export class TasksService {
         this.tasks.push(task);
         return task;
     }
+
+
     // metodo delete - retorna void (nulo) pois nao ira retornar valor
     deleteTask(id: string): void {
-
-        this.tasks = this.tasks.filter((task) => task.id !== id);
+        // validacao para a remoção da tarefa
+        const found = this.getTaskById(id);
+        this.tasks = this.tasks.filter((task) => task.id !== found.id);
     }
 
     // metodo update task
