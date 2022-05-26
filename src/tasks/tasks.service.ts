@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Task, TaskStatus } from './tasks.model';
 import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task-dto';
@@ -17,7 +17,7 @@ export class TasksService {
     getTasksWithFilter(filterDto: GetTasksFilterDto): Task[] {
         const { status, search } = filterDto;
         //definir um array temporario com todos os resultados
-        let tasks= this.getAllTasks();
+        let tasks = this.getAllTasks();
         //se o status estiver definido
         if (status) {
             tasks = tasks.filter((task) => task.status === status);
@@ -38,8 +38,19 @@ export class TasksService {
 
     //criando o metodo de criacao de id onde ele verifica se o id e igual listado 
     getTaskById(id: string): Task {
-        return this.tasks.find((task) => task.id === id)
+
+        // tentar obter uma tarefa
+        const found = this.tasks.find((task) => task.id === id)
+        // if não tiver erro(404)
+        if (!found) {
+            throw new NotFoundException(`Tarefa com ID "${id}" não encontrado!`);
+            
+        }
+        // else retrna o a tarefa encontrada
+        return found;
+
     }
+
 
 
 
