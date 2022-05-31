@@ -15,7 +15,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       database: 'task-management',
       autoLoadEntities: true,
       synchronize: true,
-
-    }),],
+    }),
+  ],
 })
 export class AppModule { }
