@@ -5,7 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // importar o mdulos do banco
 
 @Module({
-  imports: [TasksModule,
+  imports: [
+    TasksModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
