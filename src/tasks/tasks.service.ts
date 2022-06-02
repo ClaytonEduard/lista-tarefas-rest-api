@@ -5,6 +5,7 @@ import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './task.entity';
 import { TasksRepository } from './tasks.repository';
+import console from 'console';
 
 @Injectable()
 export class TasksService {
@@ -54,32 +55,18 @@ export class TasksService {
         return found;
     }
 
+    // metodo de criar tarefas
+    createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+        return this.tasksRepository.createTask(createTaskDto);
+    }
 
-
-
-
-    // // metodo de criar tarefas
-    // createTask(createTaskDto: CreateTaskDto): Task {
-    //     //anotacao esmc6
-    //     const { title, description } = createTaskDto;
-    //     const task: Task = {
-    //         id: uuid(),
-    //         title,
-    //         description,
-    //         status: TaskStatus.OPEN,
-    //     };
-
-    //     this.tasks.push(task);
-    //     return task;
-    // }
-
-
-    // // metodo delete - retorna void (nulo) pois nao ira retornar valor
-    // deleteTask(id: string): void {
-    //     // validacao para a remoção da tarefa
-    //     const found = this.getTaskById(id);
-    //     this.tasks = this.tasks.filter((task) => task.id !== found.id);
-    // }
+    // metodo delete - retorna void (nulo) pois nao ira retornar valor
+    async deleteTask(id: string): Promise<void> {
+        const result = await this.tasksRepository.delete(id);
+        if (result.affected === 0) {
+            throw new NotFoundException(`Nota com ID:"${id}" nao escontrado`);
+        }
+    }
 
     // // metodo update task
     // updateTaskStatus(id: string, status: TaskStatus) {

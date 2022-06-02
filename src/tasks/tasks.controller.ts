@@ -25,14 +25,14 @@ export class TasksController {
     }
 
     // metodo criar do lado do service
-    // @Post()
-    // createTask(@Body() createTaskDto: CreateTaskDto): Task {
-    //     return this.tasksService.createTask(createTaskDto)
-    // }
-    // @Delete('/:id')
-    // deleteTask(@Param('id') id: string): void {
-    //     return this.tasksService.deleteTask(id)
-    // }
+    @Post()
+    createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
+        return this.tasksService.createTask(createTaskDto)
+    }
+    @Delete('/:id')
+    deleteTask(@Param('id') id: string): Promise<void> {
+        return this.tasksService.deleteTask(id)
+    }
     // metodo de update
     // @Patch('/:id/status')
     // updateTaskStatus(
