@@ -8,7 +8,21 @@ import { TaskStatus } from "./tasks-status.enum";
 export class TasksRepository extends Repository<Task>{
     // metodo filtrar
     async getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+        //pesquisas com variaveis
+        const { status, search } = filterDto;
+
+        // daqui para baixo e pesquisa simples
         const query = this.createQueryBuilder('task');
+
+        // verificaçao para as pesquisas;
+        if (status) {
+            query.andWhere('task.status=:status', { status });
+        }
+        if (search) {
+            query.andWhere(
+                'LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search)',
+                { search: `%${search}%` },);
+        }
         const tasks = await query.getMany();
         return tasks;
     }
