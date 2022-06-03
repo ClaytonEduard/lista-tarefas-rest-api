@@ -20,6 +20,7 @@ export class TasksRepository extends Repository<Task>{
         }
         if (search) {
             query.andWhere(
+                // usamo LOWER para poder pesquisar tanto maiuscula quanto minusculas
                 'LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search)',
                 { search: `%${search}%` },);
         }
