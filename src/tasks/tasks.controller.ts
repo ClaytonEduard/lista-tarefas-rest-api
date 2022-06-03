@@ -9,15 +9,11 @@ import { TasksService } from './tasks.service';
 export class TasksController {
     constructor(private tasksService: TasksService) { }
     // metodo listar do lado do service
-    // @Get()
-    // getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
-    //     //se tivermos algum filtro definido basta chamar todas as tarefas
-    //     if (Object.keys(filterDto).length) {
-    //         return this.tasksService.getTasksWithFilter(filterDto);
-    //     } else {
-    //         return this.tasksService.getAllTasks();
-    //     }
-    // }
+    @Get()
+    getTasks(@Query() filterDto: GetTasksFilterDto): Promise<Task[]> {
+        //se tivermos algum filtro definido basta chamar todas as tarefas
+        return this.tasksService.getTasks(filterDto)
+    }
 
     @Get('/:id')
     getTaskById(@Param('id') id: string): Promise<Task> {
@@ -34,13 +30,13 @@ export class TasksController {
         return this.tasksService.deleteTask(id)
     }
     // metodo de update
-    // @Patch('/:id/status')
-    // updateTaskStatus(
-    //     @Param('id') id: string,
-    //     @Body() updateTaskStatusDto: UpdateTaskStatusDto,
-    // ): Task {
-    //     // cria um constante para obter o status
-    //     const { status } = updateTaskStatusDto;
-    //     return this.tasksService.updateTaskStatus(id, status);
-    // }
+    @Patch('/:id/status')
+    updateTaskStatus(
+        @Param('id') id: string,
+        @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+    ): Promise<Task> {
+        // cria um constante para obter o status
+        const { status } = updateTaskStatusDto;
+        return this.tasksService.updateTaskStatus(id, status);
+    }
 }

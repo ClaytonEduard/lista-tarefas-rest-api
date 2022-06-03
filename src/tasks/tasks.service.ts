@@ -15,36 +15,10 @@ export class TasksService {
         private tasksRepository: TasksRepository,
     ) { }
 
+    getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+        return this.tasksRepository.getTasks(filterDto);
+    }
 
-
-
-
-    // //servico de listar todas as tarefas
-    // getAllTasks(): Task[] {
-    //     return this.tasks;
-    // }
-    // //servio de listar por filtros
-    // getTasksWithFilter(filterDto: GetTasksFilterDto): Task[] {
-    //     const { status, search } = filterDto;
-    //     //definir um array temporario com todos os resultados
-    //     let tasks = this.getAllTasks();
-    //     //se o status estiver definido
-    //     if (status) {
-    //         tasks = tasks.filter((task) => task.status === status);
-    //     }
-    //     // realiza a pesquisa
-    //     if (search) {
-    //         tasks = tasks.filter((task) => {
-    //             if (task.title.includes(search) || task.description.includes(search)) {
-    //                 return true;
-    //             }
-    //             return false;
-    //         })
-    //     }
-
-    //     return tasks;
-    // }
-    // retorna um id
     async getTaskById(id: string): Promise<Task> {
         const found = await this.tasksRepository.findOne(id);
         // if não tiver erro(404)
@@ -64,16 +38,17 @@ export class TasksService {
     async deleteTask(id: string): Promise<void> {
         const result = await this.tasksRepository.delete(id);
         if (result.affected === 0) {
-            throw new NotFoundException(`Nota com ID:"${id}" nao escontrado`);
+            throw new NotFoundException(`Nota com ID:"${id}" não escontrado`);
         }
     }
 
     // // metodo update task
-    // updateTaskStatus(id: string, status: TaskStatus) {
-    //     const task = this.getTaskById(id);
-    //     task.status = status;
-    //     return task;
-    // }
+    async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+        const task = await this.getTaskById(id);
+        task.status = status;
+        await this.tasksRepository.save(task);
+        return task;
+    }
 
     // para gerar o ID automaticament usamos a biblioteca <yarn add uuid>
     // comando de iniciar sever, yarn start:dev
