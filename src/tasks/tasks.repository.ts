@@ -28,11 +28,6 @@ export class TasksRepository extends Repository<Task>{
         return tasks;
     }
 
-
-
-
-
-
     // metodo create com o banco
     async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
         const { title, description } = createTaskDto;
@@ -42,7 +37,6 @@ export class TasksRepository extends Repository<Task>{
             status: TaskStatus.OPEN,
         });
         await this.save(task);
-
         return task;
     }
 }
