@@ -7,19 +7,17 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 
+
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      // todos os segredos gerados expiram em uma hora;
-      secret: '@Admin10',
+      secret: 'postgres',
       signOptions: {
         expiresIn: 3600,
       },
-
     }),
-    TypeOrmModule.forFeature([UsersRepository],
-      )],
+    TypeOrmModule.forFeature([UsersRepository])],
   providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
   exports: [JwtStrategy, PassportModule],

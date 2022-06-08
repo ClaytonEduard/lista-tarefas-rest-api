@@ -4,7 +4,7 @@ import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { UsersRepository } from './users.repository';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from './jwt-payloud.interface';
+import { JwtPayload } from './jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -34,6 +34,7 @@ export class AuthService {
             const payload: JwtPayload = { username };
             const accessToken: string = await this.jwtService.sign(payload);
             return { accessToken };
+
         } else {
             throw new UnauthorizedException('Verifique suas credenciais de login');
         }
