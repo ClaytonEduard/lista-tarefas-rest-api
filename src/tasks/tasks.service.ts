@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './task.entity';
 import { TasksRepository } from './tasks.repository';
 import console from 'console';
+import { User } from 'src/auth/user.entity';
 
 @Injectable()
 export class TasksService {
@@ -30,8 +31,8 @@ export class TasksService {
     }
 
     // metodo de criar tarefas
-    createTask(createTaskDto: CreateTaskDto): Promise<Task> {
-        return this.tasksRepository.createTask(createTaskDto);
+    createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
+        return this.tasksRepository.createTask(createTaskDto, user);
     }
 
     // metodo delete - retorna void (nulo) pois nao ira retornar valor

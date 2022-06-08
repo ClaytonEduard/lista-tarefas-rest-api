@@ -1,5 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { User } from 'src/auth/user.entity';
 import { CreateTaskDto } from './dto/create-task-dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
@@ -24,8 +26,12 @@ export class TasksController {
 
     // metodo criar do lado do service
     @Post()
-    createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
-        return this.tasksService.createTask(createTaskDto)
+    createTask(
+        @Body() createTaskDto: CreateTaskDto,
+        // obter todos os dados do usuario
+        @GetUser() user: User,
+    ): Promise<Task> {
+        return this.tasksService.createTask(createTaskDto,user)
     }
     @Delete('/:id')
     deleteTask(@Param('id') id: string): Promise<void> {
