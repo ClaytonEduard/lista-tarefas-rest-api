@@ -7,14 +7,22 @@ import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { Task } from './task.entity';
 import { TasksService } from './tasks.service';
+import { Logger } from '@nestjs/common';
 
 @Controller('tasks')
 @UseGuards(AuthGuard())
 export class TasksController {
+    // instancido o logger, e vai se controlado pelo TasksController
+    private logger = new Logger('TasksController');
     constructor(private tasksService: TasksService) { }
     // metodo listar do lado do controller por usuario adiciona o @GetUser
     @Get()
-    getTasks(@Query() filterDto: GetTasksFilterDto, @GetUser() user: User): Promise<Task[]> {
+    getTasks(
+        @Query() filterDto: GetTasksFilterDto,
+        @GetUser() user: User,
+    ): Promise<Task[]> {
+        // log ativado para os recursos realizados pelo usuario 
+        this.logger.verbose(`Usuario: "${user.username}" listando as tarefas. Listadas:${JSON.stringify(filterDto)}`)
         //se tivermos algum filtro definido basta chamar todas as tarefas
         return this.tasksService.getTasks(filterDto, user)
     }
@@ -31,6 +39,9 @@ export class TasksController {
         // obter todos os dados do usuario
         @GetUser() user: User,
     ): Promise<Task> {
+        // log para criacao de tarefas por user
+        this.logger.verbose(`Usuário "${user.username}" criou uma nova tarefa. Dado: ${JSON.stringify(
+            createTaskDto)}`)
         return this.tasksService.createTask(createTaskDto, user)
     }
     @Delete('/:id')

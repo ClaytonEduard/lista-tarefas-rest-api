@@ -4,9 +4,13 @@ import { CreateTaskDto } from "./dto/create-task-dto";
 import { GetTasksFilterDto } from "./dto/get-tasks-filter.dto";
 import { Task } from "./task.entity";
 import { TaskStatus } from "./tasks-status.enum";
+import { InternalServerErrorException, Logger } from '@nestjs/common';
 
 @EntityRepository(Task)
 export class TasksRepository extends Repository<Task>{
+    // metodo de log 
+    private logger = new Logger('TasksRepository');
+
     // metodo filtrar
     async getTasks(filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
         //pesquisas com variaveis
@@ -16,7 +20,7 @@ export class TasksRepository extends Repository<Task>{
         const query = this.createQueryBuilder('task');
 
         // adicionando a consulta por usuario
-        query.where({user})
+        query.where({ user })
 
         // verificaçao para as pesquisas;
         if (status) {
@@ -28,8 +32,17 @@ export class TasksRepository extends Repository<Task>{
                 '(LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search))',
                 { search: `%${search}%` });
         }
-        const tasks = await query.getMany();
-        return tasks;
+
+        // inciando o log do metodo listar
+        // se tiver erro durante a lista
+        try {
+            const tasks = await query.getMany();
+            return tasks;
+        } catch (error) {
+            this.logger.error(`Falha ao listar as tarefas do usuário:"${user.username}".
+                 Lista:${JSON.stringify(filterDto)}`, error.stack);
+            throw new InternalServerErrorException();
+        }
     }
 
     // metodo create com o banco
