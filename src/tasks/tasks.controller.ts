@@ -12,16 +12,16 @@ import { TasksService } from './tasks.service';
 @UseGuards(AuthGuard())
 export class TasksController {
     constructor(private tasksService: TasksService) { }
-    // metodo listar do lado do service
+    // metodo listar do lado do controller por usuario adiciona o @GetUser
     @Get()
-    getTasks(@Query() filterDto: GetTasksFilterDto): Promise<Task[]> {
+    getTasks(@Query() filterDto: GetTasksFilterDto, @GetUser() user: User): Promise<Task[]> {
         //se tivermos algum filtro definido basta chamar todas as tarefas
-        return this.tasksService.getTasks(filterDto)
+        return this.tasksService.getTasks(filterDto, user)
     }
-
+    // selecionar somente a tarefa do usuario logado, adiciona o @GetUser
     @Get('/:id')
-    getTaskById(@Param('id') id: string): Promise<Task> {
-        return this.tasksService.getTaskById(id);
+    getTaskById(@Param('id') id: string, @GetUser() user: User): Promise<Task> {
+        return this.tasksService.getTaskById(id, user);
     }
 
     // metodo criar do lado do service
@@ -31,20 +31,22 @@ export class TasksController {
         // obter todos os dados do usuario
         @GetUser() user: User,
     ): Promise<Task> {
-        return this.tasksService.createTask(createTaskDto,user)
+        return this.tasksService.createTask(createTaskDto, user)
     }
     @Delete('/:id')
-    deleteTask(@Param('id') id: string): Promise<void> {
-        return this.tasksService.deleteTask(id)
+    deleteTask(@Param('id') id: string, @GetUser() user: User): Promise<void> {
+        return this.tasksService.deleteTask(id, user)
     }
     // metodo de update
     @Patch('/:id/status')
     updateTaskStatus(
         @Param('id') id: string,
         @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+        // obter todos os dados do usuario
+        @GetUser() user: User,
     ): Promise<Task> {
         // cria um constante para obter o status
         const { status } = updateTaskStatusDto;
-        return this.tasksService.updateTaskStatus(id, status);
+        return this.tasksService.updateTaskStatus(id, status, user);
     }
 }

@@ -15,13 +15,16 @@ export class TasksService {
         @InjectRepository(TasksRepository)
         private tasksRepository: TasksRepository,
     ) { }
-
-    getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
-        return this.tasksRepository.getTasks(filterDto);
+    // filtrar por usuario adiciona os user: User
+    getTasks(filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
+        return this.tasksRepository.getTasks(filterDto, user);
     }
 
-    async getTaskById(id: string): Promise<Task> {
-        const found = await this.tasksRepository.findOne(id);
+    async getTaskById(id: string, user: User): Promise<Task> {
+        // busa somente por um id
+        //  const found = await this.tasksRepository.findOne(id);
+        // assim busca pelo id e pelo usuario
+        const found = await this.tasksRepository.findOne({ where: { id, user } });
         // if não tiver erro(404)
         if (!found) {
             throw new NotFoundException(`Tarefa com ID "${id}" não encontrado!`);
@@ -36,16 +39,20 @@ export class TasksService {
     }
 
     // metodo delete - retorna void (nulo) pois nao ira retornar valor
-    async deleteTask(id: string): Promise<void> {
-        const result = await this.tasksRepository.delete(id);
+    async deleteTask(id: string, user: User): Promise<void> {
+        const result = await this.tasksRepository.delete({ id, user });
         if (result.affected === 0) {
             throw new NotFoundException(`Nota com ID:"${id}" não escontrado`);
         }
     }
 
     // // metodo update task
-    async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
-        const task = await this.getTaskById(id);
+    async updateTaskStatus(
+        id: string,
+        status: TaskStatus,
+        user: User,
+    ): Promise<Task> {
+        const task = await this.getTaskById(id, user);
         task.status = status;
         await this.tasksRepository.save(task);
         return task;
