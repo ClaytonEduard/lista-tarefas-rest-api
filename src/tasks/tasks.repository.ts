@@ -30,7 +30,8 @@ export class TasksRepository extends Repository<Task>{
             query.andWhere(
                 // usamo LOWER para poder pesquisar tanto maiuscula quanto minusculas
                 '(LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search))',
-                { search: `%${search}%` });
+                { search: `%${search}%` },
+                );
         }
 
         // inciando o log do metodo listar
@@ -40,7 +41,8 @@ export class TasksRepository extends Repository<Task>{
             return tasks;
         } catch (error) {
             this.logger.error(`Falha ao listar as tarefas do usuário:"${user.username}".
-                 Lista:${JSON.stringify(filterDto)}`, error.stack);
+                 Lista:${JSON.stringify(filterDto)}`, error.stack,
+                 );
             throw new InternalServerErrorException();
         }
     }

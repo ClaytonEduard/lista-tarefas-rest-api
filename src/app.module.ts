@@ -21,7 +21,6 @@ import { configValidationSchema } from './config.schema';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-
         type: 'postgres',
         autoLoadEntities: true,
         synchronize: true,
@@ -30,7 +29,6 @@ import { configValidationSchema } from './config.schema';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-
       }),
     }),
     AuthModule,

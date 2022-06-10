@@ -19,4 +19,5 @@ export class Task {
     //exclui as propriedades privadas do usuario, é necessario criar uma class de trasnformacao - transform.interceptor.ts
     @Exclude({ toPlainOnly: true })
     user: User;
+
 }
