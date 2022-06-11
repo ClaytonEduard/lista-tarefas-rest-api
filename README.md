@@ -22,17 +22,17 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Description - Descrição
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+## Installation - Instalação
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+## Running the app - Executando o aplicativo
 
 ```bash
 # development
@@ -40,10 +40,6 @@ $ npm run start
 
 # watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
 
 ## Test
 
@@ -58,10 +54,16 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Support - Suporte
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## License
+Nest é um projeto de código aberto licenciado pelo MIT. Pode crescer graças aos patrocinadores e ao apoio dos incríveis patrocinadores. Se você quiser se juntar a eles, [leia mais aqui](https://docs.nestjs.com/support)
+
+
+
+## License - Licença
 
 Nest is [MIT licensed](LICENSE).
+Nest é [licenciado pelo MIT](LICENSE)
+
