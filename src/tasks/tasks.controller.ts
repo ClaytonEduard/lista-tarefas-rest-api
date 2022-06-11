@@ -14,7 +14,9 @@ import { Logger } from '@nestjs/common';
 export class TasksController {
     // instancido o logger, e vai se controlado pelo TasksController
     private logger = new Logger('TasksController');
-    constructor(private tasksService: TasksService) { }
+    constructor(private tasksService: TasksService) { 
+        
+    }
     // metodo listar do lado do controller por usuario adiciona o @GetUser
     @Get()
     getTasks(

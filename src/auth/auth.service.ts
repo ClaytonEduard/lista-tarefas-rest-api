@@ -11,7 +11,6 @@ export class AuthService {
     constructor(
         @InjectRepository(UsersRepository)
         private usersRepository: UsersRepository,
-        // buscando o metodo JWT
         private jwtService: JwtService,
     ) { }
 
