@@ -11,7 +11,7 @@ import { configValidationSchema } from './config.schema';
   imports: [
     // em um app pronto para producao, vc tem varios estagios, desenvolvimento, teste, producao
     // cada um com configuracao diferente e extecoes de bancos diferenrtes...etc
-    ConfigModule.forRoot({
+        ConfigModule.forRoot({
       //carregar minha config atraes deste aquivo  
       envFilePath: [`.env.stage.${process.env.STAGE}`],
       validationSchema: configValidationSchema,
