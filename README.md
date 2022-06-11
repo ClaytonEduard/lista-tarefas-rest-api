@@ -67,3 +67,26 @@ Nest é um projeto de código aberto licenciado pelo MIT. Pode crescer graças a
 Nest is [MIT licensed](LICENSE).
 Nest é [licenciado pelo MIT](LICENSE)
 
+## Layout
+
+# Imagem código base:
+![image](https://user-images.githubusercontent.com/11823640/173204734-0e1eeaa4-f67d-4771-bc12-3a66142d8b98.png)
+
+# Criando Usuário
+ *Criação de Usuário com verificação de padrões de senhas com criptográfia e atribuição de mais seguração na senha do usuário.
+ *![image](https://user-images.githubusercontent.com/11823640/173204925-bbce5d24-0c2e-4d83-86a5-7e1ab44f04ac.png)
+
+# Utilizando Postman para alimentação de dados
+ * Login de um usuário com fornecimento de token
+ ![image](https://user-images.githubusercontent.com/11823640/173204854-fea7e20b-f874-482d-9feb-459a9087a662.png)
+
+# Listando as tarefas do Usuário logado.
+![image](https://user-images.githubusercontent.com/11823640/173204981-90c17adf-79df-4d35-8603-f1a347995fde.png)
+
+# Controle de log no console
+![image](https://user-images.githubusercontent.com/11823640/173205008-8eddaf02-2535-4e7f-9b4f-279eab004d11.png)
+
+
+
+
+
